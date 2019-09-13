@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:watch": "nodemon ."
   },
+  "engines": {
+    "npm": "5.8.0",
+    "node": "10.x"
+  },
   "author": "Precious Keyz",
   "license": "MIT",
   "dependencies": {
