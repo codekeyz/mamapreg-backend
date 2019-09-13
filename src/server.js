@@ -15,8 +15,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use(helmet)
-
 // setup routes
 router(app)
 
