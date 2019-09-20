@@ -9,8 +9,7 @@ router.post('/register', [
     body('password').isLength({ min: 5 }),
     body('username').isLength({ min: 5 }),
     body('first_name').optional().isLength({ min: 5 }),
-    body('last_name').optional().isLength({ min: 5 }),
-    body('phone').optional().isMobilePhone(),
+    body('last_name').optional().isLength({ min: 5 })
 ], userController.createUser);
 
 // login a user
