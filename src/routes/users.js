@@ -8,8 +8,8 @@ router.post('/register', [
     body('email').isEmail().normalizeEmail(),
     body('password').isLength({ min: 5 }),
     body('username').isLength({ min: 5 }),
-    body('first_name').optional().isLength({ min: 5 }),
-    body('last_name').optional().isLength({ min: 5 })
+    body('first_name').optional({ nullable: true }).isLength({ min: 5 }),
+    body('last_name').optional({ nullable: true }).isLength({ min: 5 })
 ], userController.createUser);
 
 // login a user
