@@ -1,19 +1,29 @@
-const jwt = require('jsonwebtoken')
-const User = require('../models/User')
+const request = require('request');
 
-const auth = async (req, res, next) => {
-    const token = req.header('Authorization').replace('Bearer ', '')
-    const data = jwt.verify(token, process.env.JWT_KEY)
-    try {
-        const user = await User.findOne({ _id: data._id, 'tokens.token': token })
-        if (!user) {
-            throw new Error()
-        }
-        req.user = user
-        req.token = token
-        next()
-    } catch (error) {
-        res.status(401).send({ error: 'Not authorized to access this resource' })
+
+const auth = async (req, res, next) => request.post({
+    url: `${process.env.CONSUMER_WEBSITE}/wp-json/jwt-auth/v1/token/validate`,
+    headers: {
+        'Authorization': req.headers['authorization']
     }
-}
+}, function (error, response, body) {
+
+    var message = 'An error occurred', statusCode = response.statusCode;
+
+    if (error) message = error;
+
+    if (body && JSON.parse(body)) {
+        var payLoad = JSON.parse(body);
+        statusCode = payLoad.data.status;
+        message = payLoad.message;
+    }
+
+    if (statusCode !== 200) return res.status(statusCode).json({
+        message: message
+    });
+
+    next();
+
+});
+
 module.exports = auth
