@@ -1,5 +1,5 @@
 const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
-const CUSTOMERS = 'customers', PRODUCTS = 'products', CATEGORIES = 'products/categories', ORDERS = 'orders';
+const CUSTOMERS = 'customers', PRODUCTS = 'products', CATEGORIES = 'products/categories', ORDERS = 'orders', REVIEWS = `${PRODUCTS}/reviews`;
 
 // initialize woocommerce
 const wooClient = new WooCommerceRestApi({
@@ -11,6 +11,12 @@ const wooClient = new WooCommerceRestApi({
 });
 
 exports.getProducts = async (options = {}) => await wooClient.get(PRODUCTS, options);
+
+
+exports.getProduct = async (productId) => await wooClient.get(`${PRODUCTS}/${productId}`);
+
+
+exports.getReviews = async (options = {}) => await wooClient.get(REVIEWS, options);
 
 
 exports.getCategories = async (options = {}) => await wooClient.get(CATEGORIES, options);
